@@ -57,6 +57,7 @@ public class MiZhuan {
 				Thread.sleep(5000);
 //				AdbUtils.click(605, 340);   //CAN_CUN
 				AdbUtils.click(620, 320);   //oppo A37m
+				Thread.sleep(3000);
 				if(AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
 					AdbUtils.back();
 					continue;

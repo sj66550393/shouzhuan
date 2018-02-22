@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String adb =  "D:\\AndroidSDK\\platform-tools\\adb.exe -s CYSBBAE680109448 shell ";
+	private static String adb =  "D:\\AndroidSDK\\platform-tools\\adb.exe shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
     	System.out.println("exeResult = " + execResult);
