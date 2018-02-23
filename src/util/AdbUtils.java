@@ -5,10 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String adb =  "D:\\AndroidSDK\\platform-tools\\adb.exe shell ";
+	private static String adb =  "adb shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
-    	System.out.println("exeResult = " + execResult);
     	String[] str = execResult.split(" ");
     	return  execResult.split(" ")[5];
     	
@@ -36,7 +35,6 @@ public class AdbUtils {
     public static void exec(String cmd) throws Exception {
         Process ps = null;
         try {
-            System.out.println(cmd);
             ps = Runtime.getRuntime().exec(cmd);
             int code = ps.waitFor();
             if (code != 0) throw new Exception("exec error(code=" + code + "): " + cmd);

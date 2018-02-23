@@ -17,6 +17,7 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+
 public class CutImageUtil {
 	 private static final String DESTIMAGEPATH = "e://";
 	    private static final String BASE_IMAGE_URL="http://pimages3.tianjimedia.com/resources/product/";
@@ -86,6 +87,45 @@ public class CutImageUtil {
 	            }
 	        }
 	        return result;
+	    }
+	    
+	    public static String cutLocalImage(String imagePath , int minX , int minY , int width , int height) {
+	        String fileName="";
+	        String fileNameAndPath="";
+	        FileInputStream fis = null;
+	        ImageInputStream iis = null;
+	        try {
+	            /**读取图片*/
+	            Iterator<ImageReader> it = ImageIO.getImageReadersByFormatName("png");
+	            ImageReader reader = it.next();
+	            /**获取图片流*/
+	            fis = new FileInputStream(imagePath);
+	            iis = ImageIO.createImageInputStream(fis);
+	            reader.setInput(iis, true);
+
+	            ImageReadParam param = reader.getDefaultReadParam();
+	            Rectangle rect = new Rectangle(minX, minY, width, height);
+	            param.setSourceRegion(rect);
+	            BufferedImage bi = reader.read(0, param);
+
+	            fileName=GlobalMethodUtil.createFileName("png");
+	            fileNameAndPath=GlobalMethodUtil.createDir("/home/tmp/qicheInfo/resources/product/")+fileName;
+	            ImageIO.write(bi, "png", new File(DESTIMAGEPATH + new Date().getTime() + "." + "png"));
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        } finally {
+	            try {
+	                if (fis != null) {
+	                    fis.close();
+	                }
+	                if (iis != null) {
+	                    iis.close();
+	                }
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	        return BASE_IMAGE_URL+fileNameAndPath.substring(fileNameAndPath.indexOf("product/")+8);
 	    }
 
 	    /**
