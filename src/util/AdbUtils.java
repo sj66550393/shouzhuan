@@ -90,5 +90,33 @@ public class AdbUtils {
 			e.printStackTrace();
 		}
     }
+    
+    public static void screenCap() {
+    	try {
+    		exec(adb + "screencap -p /sdcard/1.png");
+    		Thread.sleep(3000);
+    		exec("adb pull /sdcard/1.png e:/");
+    		Thread.sleep(3000);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public static String screenCapAndCut(int x , int y , int width , int height) {
+    	try {
+    		exec(adb + "screencap -p /sdcard/1.png");
+    		Thread.sleep(3000);
+    		exec("adb pull /sdcard/1.png e:/");
+    		Thread.sleep(3000);
+    		String str = CutImageUtil.cutLocalImage("e:/1.png",x,y,width,height);
+			System.out.println(str);
+			return "e:/1.png" + str + ".png";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
 
 }
