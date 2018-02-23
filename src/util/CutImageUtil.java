@@ -89,11 +89,12 @@ public class CutImageUtil {
 	        return result;
 	    }
 	    
-	    public static String cutLocalImage(String imagePath , int minX , int minY , int width , int height) {
+	    public static String cutLocalImage(String imagePath , String desPath , int minX , int minY , int width , int height) {
 	        String fileName="";
 	        String fileNameAndPath="";
 	        FileInputStream fis = null;
 	        ImageInputStream iis = null;
+	        String date = "";
 	        try {
 	            /**∂¡»°Õº∆¨*/
 	            Iterator<ImageReader> it = ImageIO.getImageReadersByFormatName("png");
@@ -110,7 +111,8 @@ public class CutImageUtil {
 
 	            fileName=GlobalMethodUtil.createFileName("png");
 	            fileNameAndPath=GlobalMethodUtil.createDir("/home/tmp/qicheInfo/resources/product/")+fileName;
-	            ImageIO.write(bi, "png", new File(DESTIMAGEPATH + new Date().getTime() + "." + "png"));
+	            date = new Date().getTime() + "";
+	            ImageIO.write(bi, "png", new File(desPath + date + "." + "png"));
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
 	        } finally {
@@ -125,7 +127,7 @@ public class CutImageUtil {
 	                ex.printStackTrace();
 	            }
 	        }
-	        return BASE_IMAGE_URL+fileNameAndPath.substring(fileNameAndPath.indexOf("product/")+8);
+	        return desPath + date + "." + "png";
 	    }
 
 	    /**
@@ -172,7 +174,7 @@ public class CutImageUtil {
 	        }
 	        return BASE_IMAGE_URL+fileNameAndPath.substring(fileNameAndPath.indexOf("product/")+8);
 	    }
-
+	    
 	    private static class GlobalMethodUtil {
 
 	        /**
