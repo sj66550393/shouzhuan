@@ -14,21 +14,27 @@ public class ExtraBonusManager {
 	public ExtraBonusManager(){
 		
 	}
-	public boolean checkClickBottomApplication(){
-		String path = AdbUtils.ScreenCapAndCut(249,1106,42,42);
-		try {
-			FingerPrint fp1 = new FingerPrint(ImageIO.read(new File("res/application_selected.png")));
-	        FingerPrint fp2 =new FingerPrint(ImageIO.read(new File(path)));
-	        float sim  = fp1.compare(fp2);
-	        System.out.printf("sim=%f",sim);
-	        if(sim > 0.95){
-	        	return true;
-	        }else{
-	        	return false;
-	        }
-		} catch (IOException e) {
-			e.printStackTrace();
+
+	public boolean checkClickBottomApplication() {
+		String path = AdbUtils.ScreenCapAndCut(249, 1106, 42, 42);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_selected.png", path);
+		System.out.printf("sim=%f", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
 			return false;
 		}
 	}
+	
+	public boolean checkClickExtraBonus(){
+		String path = AdbUtils.ScreenCapAndCut(480, 150, 240, 85);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_reward_selected.png", path);
+		System.out.printf("sim=%f", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

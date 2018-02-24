@@ -22,20 +22,8 @@ public class MiZhuan {
 	public void start() {
 		try {
 		    if(!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
-		    	AdbUtils.killProcess("me.mizhuan");
-		    	AdbUtils.startActivity("me.mizhuan/.ActCover");
-		    	Thread.sleep(50*1000);
+		    	restartApp();
 		    }
-			// 点击应用赚
-			AdbUtils.click(270, 1140);   //CAN_CUN
-//			AdbUtils.click(270, 1233);  //oppo A37m
-			Thread.sleep(1000);
-			if(!extraBonusManager.checkClickBottomApplication()){
-				return;
-			}
-			// 额外奖励
-			AdbUtils.click(610, 200);     //CAN_CUN
-//			AdbUtils.click(610, 180);     //oppo A37m
 			startSigninAppTask();
 //			点击推荐
 		   AdbUtils.click(90, 1230);  //oppo A37m
@@ -54,9 +42,26 @@ public class MiZhuan {
 	public void startInstallAppTask(){
 		
 	}
+	
 	//额外奖励
 	public void startSigninAppTask() {
 		try {
+			// 点击应用赚
+			AdbUtils.click(270, 1140);   //CAN_CUN
+//			AdbUtils.click(270, 1233);  //oppo A37m
+			Thread.sleep(1000);
+			if(!extraBonusManager.checkClickBottomApplication()){
+				restartApp();
+				return;
+			}
+			// 额外奖励
+			AdbUtils.click(610, 200);     //CAN_CUN
+//			AdbUtils.click(610, 180);     //oppo A37m
+			Thread.sleep(8000);
+			if(!extraBonusManager.checkClickExtraBonus()){
+				restartApp();
+				return;
+			}
 			for (int i = 0; i < 50; i++) {
 				Thread.sleep(500);
 				AdbUtils.swipe(300, 500, 300, 1000);
@@ -64,6 +69,7 @@ public class MiZhuan {
 //				AdbUtils.click(605, 340);   //CAN_CUN
 				AdbUtils.click(620, 320);   //oppo A37m
 				Thread.sleep(3000);
+				
 				if(AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
 					AdbUtils.back();
 					continue;
@@ -76,9 +82,11 @@ public class MiZhuan {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			restartApp();
 		}
 	}
 	
+	//看看赚
 	public void startLooklookTask(){
 	    clickHotNews();
 		clickThreeSixZeroNews();
@@ -212,6 +220,7 @@ public class MiZhuan {
 			}
 		}
 	
+	//滑动点击新闻
 	public void swipeAndClickNews(){
 		try {
 			Thread.sleep(5000);
@@ -231,5 +240,19 @@ public class MiZhuan {
 	
 	public boolean isCAN_CUN(){
 		return true;
+	}
+	
+	public void restartApp(){
+		try {
+			while(!AdbUtils.getCurrentPackage().contains("launcher")){
+				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
+			}
+			Thread.sleep(3000);
+			AdbUtils.startActivity("me.mizhuan/.ActCover");
+			Thread.sleep(30000);
+			start();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
