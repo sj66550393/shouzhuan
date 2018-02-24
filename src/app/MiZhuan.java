@@ -1,6 +1,7 @@
 package app;
 
 import common.Contants;
+import manager.ExtraBonusManager;
 import util.AdbUtils;
 
 public class MiZhuan {
@@ -10,10 +11,12 @@ public class MiZhuan {
 	private int redPackageNum  = 0;        //拆红包 5篇
 	private int goldNewsNum  = 0;        //点金头条 7篇
 	private int loveNewsNum  = 0;        //我爱头条 6篇
+	
+	ExtraBonusManager extraBonusManager;
 
 	
 	public MiZhuan(){
-		
+		extraBonusManager = new ExtraBonusManager();
 	}
 	
 	public void start() {
@@ -27,6 +30,9 @@ public class MiZhuan {
 			AdbUtils.click(270, 1140);   //CAN_CUN
 //			AdbUtils.click(270, 1233);  //oppo A37m
 			Thread.sleep(1000);
+			if(!extraBonusManager.checkClickBottomApplication()){
+				return;
+			}
 			// 额外奖励
 			AdbUtils.click(610, 200);     //CAN_CUN
 //			AdbUtils.click(610, 180);     //oppo A37m
