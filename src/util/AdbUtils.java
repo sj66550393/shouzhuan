@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String adb =  "adb shell ";
+	private static String deviceId = "CYSBBAE680109448";
+	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
     	String[] str = execResult.split(" ");
@@ -95,7 +96,7 @@ public class AdbUtils {
     	try {
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb pull sdcard/1.png d:/");
+    		exec("adb -s "+  deviceId + " pull sdcard/1.png d:/");
     		Thread.sleep(3000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -107,7 +108,7 @@ public class AdbUtils {
     	try {
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb pull sdcard/1.png d:/");
+    		exec("adb -s " + deviceId + " pull sdcard/1.png d:/");
     		Thread.sleep(3000);
     		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/", x, y, width, height);
     		System.out.println(path);

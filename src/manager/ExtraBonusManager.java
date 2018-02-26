@@ -37,4 +37,15 @@ public class ExtraBonusManager {
 		}
 	}
 	
+	public boolean checkEnterApp(){
+		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_reward_selected.png", path);
+		System.out.printf("sim=%f", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
