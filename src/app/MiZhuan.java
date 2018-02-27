@@ -1,6 +1,7 @@
 package app;
 
 import common.Contants;
+import common.ResultDict;
 import manager.ExtraBonusManager;
 import util.AdbUtils;
 
@@ -69,15 +70,25 @@ public class MiZhuan {
 //				AdbUtils.click(605, 340);   //CAN_CUN
 				AdbUtils.click(620, 320);   //oppo A37m
 				Thread.sleep(3000);
-				
-				if(AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
+				switch(extraBonusManager.checkEnterApp()){
+				case ResultDict.COMMAND_BACK:
 					AdbUtils.back();
 					continue;
+				case ResultDict.COMMAND_RESTART_APP:
+					restartApp();
+					break;
+				case ResultDict.COMMAND_SUCCESS:
+					break;
+				default:
+					break;
 				}
 				Thread.sleep(1 * 70 * 1000);
+				String name  = AdbUtils.getCurrentPackage();
 				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
-				Thread.sleep(1000);
-				AdbUtils.swipe(300, 500, 300, 1000);
+				if(!extraBonusManager.checkKillApp(name)){
+					restartApp();
+					return;
+				}
 				Thread.sleep(5000);
 			}
 		} catch (Exception e) {
