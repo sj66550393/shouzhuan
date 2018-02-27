@@ -2,8 +2,11 @@ package util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import PicCompare.FingerPrint;
 
 public class PicCompareUtils {
 	// 改变成二进制码
@@ -114,8 +117,20 @@ public class PicCompareUtils {
 		if (busi == 0) {
 			baifen = "100";
 		}
-
 		System.out.println("相似像素数量：" + xiangsi + " 不相似像素数量：" + busi + " 相似率：" + Integer.parseInt(baifen) + "%");
-
+	}
+	
+	public static float comparePicByFingerPrint(String path1 , String path2){
+		FingerPrint fp1;
+		try {
+			fp1 = new FingerPrint(ImageIO.read(new File(path1)));
+			FingerPrint fp2 =new FingerPrint(ImageIO.read(new File(path2)));
+			return fp1.compare(fp2);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 0;
+		}
+        
+        
 	}
 }
