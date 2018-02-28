@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String deviceId = "CYSBBAE680109448";
+	private static String deviceId = "GEQBBAE672607770";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
@@ -108,9 +108,9 @@ public class AdbUtils {
     	try {
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb -s " + deviceId + " pull sdcard/1.png e:/123/");
+    		exec("adb -s " + deviceId + " pull sdcard/1.png d:/");
     		Thread.sleep(3000);
-    		String path  = CutImageUtil.cutLocalImage("e:/123/1.png", "e:/123/", x, y, width, height);
+    		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/", x, y, width, height);
     		System.out.println(path);
     		return path;
 		} catch (Exception e) {

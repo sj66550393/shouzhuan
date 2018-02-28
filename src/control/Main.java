@@ -14,8 +14,9 @@ import util.CutImageUtil;
 public class Main {
 	
 	public static void main(String[] args) {
-		Timer t = new Timer();
-    	t.schedule(new Task1(), 1000); 
+//		Timer t = new Timer();
+//    	t.schedule(new Task1(), 1000); 
+		AdbUtils.ScreenCapAndCut(287, 72, 146, 46);
 	}
 }
 
@@ -26,12 +27,21 @@ class Task1 extends TimerTask{
 	}
 	@Override
 	public void run() {
-    	switch(mizhuan.start()) {
-    	case ResultDict.COMMAND_RESTART_APP:
-    	    
-    		default:
-    		break;	
-    	}
+		switch (mizhuan.start()) {
+		case ResultDict.COMMAND_RESTART_APP:
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					restartApp();
+				}
+			}).start();
+			break;
+		case ResultDict.COMMAND_SUCCESS:
+			System.out.println("success");
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public void restartApp(){
