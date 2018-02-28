@@ -39,18 +39,18 @@ public class ExtraBonusManager {
 	}
 	
 	public int checkEnterApp(){
-//		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
-//		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_reward_selected.png", path);
-//		System.out.printf("checkEnterApp sim=%f", sim);
-//		if (sim < 0.95) {
-//			return ResultDict.COMMAND_BACK;
-//		}
-//		if(isHuaweiUpdateActivity()){
-//			return ResultDict.COMMAND_BACK;
-//		}
-//		if(AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
-//			return ResultDict.COMMAND_RESTART_APP;
-//		}
+		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/app_detail.png", path);
+		System.out.printf("checkEnterApp sim=%f", sim);
+		if (sim < 0.95) {
+			return ResultDict.COMMAND_BACK;
+		}
+		if(isHuaweiUpdateActivity()){
+			return ResultDict.COMMAND_BACK;
+		}
+		if(AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
+			return ResultDict.COMMAND_RESTART_APP;
+		}
 		return ResultDict.COMMAND_SUCCESS;
 	}
 	
