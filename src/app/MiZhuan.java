@@ -20,94 +20,94 @@ public class MiZhuan {
 		extraBonusManager = new ExtraBonusManager();
 	}
 	
-	public void start() {
-		try {
-		    if(!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
-		    	restartApp();
-		    }
-			startSigninAppTask();
-//			点击推荐
-		   AdbUtils.click(90, 1230);  //oppo A37m
-		   AdbUtils.click(97, 1144);  //CAN_CUN
-		   //点击看看赚
-		   AdbUtils.click(450, 224);  // oppo CAN_CUN一样
-		   Thread.sleep(2000);
-		   startLooklookTask();
-		  
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public int start() {
+		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
+			return ResultDict.COMMAND_RESTART_APP;
 		}
+		int result = startSigninAppTask();
+		if(ResultDict.COMMAND_SUCCESS != result)
+			return result;
+		startLooklookTask();
+		return ResultDict.COMMAND_SUCCESS;
 	}
 	//安装任务
 	public void startInstallAppTask(){
 		
 	}
 	
-	//额外奖励
-	public void startSigninAppTask() {
+	// 额外奖励
+	public int startSigninAppTask() {
 		try {
 			// 点击应用赚
-			AdbUtils.click(270, 1140);   //CAN_CUN
-//			AdbUtils.click(270, 1233);  //oppo A37m
+			AdbUtils.click(270, 1140); // CAN_CUN
+			// AdbUtils.click(270, 1233); //oppo A37m
 			Thread.sleep(1000);
-			if(!extraBonusManager.checkClickBottomApplication()){
-				restartApp();
-				return;
+			if (!extraBonusManager.checkClickBottomApplication()) {
+				return ResultDict.COMMAND_RESTART_APP;
 			}
 			// 额外奖励
-			AdbUtils.click(610, 200);     //CAN_CUN
-//			AdbUtils.click(610, 180);     //oppo A37m
+			AdbUtils.click(610, 200); // CAN_CUN
+			// AdbUtils.click(610, 180); //oppo A37m
 			Thread.sleep(8000);
-			if(!extraBonusManager.checkClickExtraBonus()){
-				restartApp();
-				return;
+			if (!extraBonusManager.checkClickExtraBonus()) {
+				return ResultDict.COMMAND_RESTART_APP;
 			}
 			for (int i = 0; i < 50; i++) {
 				Thread.sleep(500);
 				AdbUtils.swipe(300, 500, 300, 1000);
 				Thread.sleep(5000);
-//				AdbUtils.click(605, 340);   //CAN_CUN
-				AdbUtils.click(620, 320);   //oppo A37m
+				// AdbUtils.click(605, 340); //CAN_CUN
+				AdbUtils.click(620, 320); // oppo A37m
 				Thread.sleep(3000);
-				switch(extraBonusManager.checkEnterApp()){
+				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
 					AdbUtils.back();
+					Thread.sleep(5000);
 					continue;
 				case ResultDict.COMMAND_RESTART_APP:
-					restartApp();
-					break;
+					return ResultDict.COMMAND_RESTART_APP;
 				case ResultDict.COMMAND_SUCCESS:
 					break;
 				default:
 					break;
 				}
 				Thread.sleep(1 * 70 * 1000);
-				String name  = AdbUtils.getCurrentPackage();
+				String name = AdbUtils.getCurrentPackage();
 				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
-				if(!extraBonusManager.checkKillApp(name)){
-					restartApp();
-					return;
+				Thread.sleep(5000);
+				if (!extraBonusManager.checkKillApp(name)) {
+					return ResultDict.COMMAND_RESTART_APP;
 				}
 				Thread.sleep(5000);
 			}
+			return ResultDict.COMMAND_SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
-			restartApp();
+			return ResultDict.COMMAND_RESTART_APP;
 		}
 	}
 	
-	//看看赚
-	public void startLooklookTask(){
-	    clickHotNews();
-		clickThreeSixZeroNews();
-		clickTuitui();
-		clickRedPackage();
-		if(isCAN_CUN()){
-		AdbUtils.swipe(300, 1000, 300, 500);
+	// 看看赚
+	public void startLooklookTask() {
+		try {
+			// 点击推荐
+			AdbUtils.click(90, 1230); // oppo A37m
+			AdbUtils.click(97, 1144); // CAN_CUN
+			// 点击看看赚
+			AdbUtils.click(450, 224); // oppo CAN_CUN一样
+			Thread.sleep(2000);
+			clickHotNews();
+			clickThreeSixZeroNews();
+			clickTuitui();
+			clickRedPackage();
+			if (isCAN_CUN()) {
+				AdbUtils.swipe(300, 1000, 300, 500);
+			}
+			clickGoldNews();
+			clickLoveNews();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		clickGoldNews();
-		clickLoveNews();
 	}
 	
 	//点广告

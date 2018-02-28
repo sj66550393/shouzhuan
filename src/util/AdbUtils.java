@@ -96,7 +96,7 @@ public class AdbUtils {
     	try {
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb -s "+  deviceId + " pull sdcard/1.png d:/");
+    		exec("adb -s "+  deviceId + " pull sdcard/1.png e:/");
     		Thread.sleep(3000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -108,9 +108,9 @@ public class AdbUtils {
     	try {
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb -s " + deviceId + " pull sdcard/1.png d:/");
+    		exec("adb -s " + deviceId + " pull sdcard/1.png e:/123/");
     		Thread.sleep(3000);
-    		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/", x, y, width, height);
+    		String path  = CutImageUtil.cutLocalImage("e:/123/1.png", "e:/123/", x, y, width, height);
     		System.out.println(path);
     		return path;
 		} catch (Exception e) {
