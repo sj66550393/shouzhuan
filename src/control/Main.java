@@ -16,7 +16,11 @@ public class Main {
 	public static void main(String[] args) {
 //		Timer t = new Timer();
 //    	t.schedule(new Task1(), 1000); 
-		AdbUtils.ScreenCapAndCut(287, 72, 146, 46);
+//		AdbUtils.ScreenCapAndCut(34,526 , 76, 76);
+//		for(int i=0;i<5;i++){
+//		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/",34+144*i,526 , 76, 76);
+//		System.out.println(path);
+//	}
 	}
 }
 

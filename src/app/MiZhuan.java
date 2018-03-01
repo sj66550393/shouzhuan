@@ -3,6 +3,7 @@ package app;
 import common.Contants;
 import common.ResultDict;
 import manager.ExtraBonusManager;
+import manager.LooklookManager;
 import util.AdbUtils;
 
 public class MiZhuan {
@@ -14,10 +15,12 @@ public class MiZhuan {
 	private int loveNewsNum  = 0;        //我爱头条 6篇
 	
 	ExtraBonusManager extraBonusManager;
+	LooklookManager looklookManager;
 
 	
 	public MiZhuan(){
 		extraBonusManager = new ExtraBonusManager();
+		looklookManager = new LooklookManager();
 	}
 	
 	public int start() {
@@ -110,6 +113,16 @@ public class MiZhuan {
 		}
 	}
 	
+	//从游戏赚中进入看看赚
+	public void startLooklookTaskFromBottomGame(){
+//		// 点击游戏赚
+//		AdbUtils.click(270, 1140); // CAN_CUN
+//		// AdbUtils.click(270, 1233); //oppo A37m
+//		Thread.sleep(1000);
+//		if (!looklookManager.checkClickBottomApplication()) {
+//			return ResultDict.COMMAND_RESTART_APP;
+//		}
+	}
 	//点广告
 	public void clickAdvs(){
 		//oppo配置
@@ -251,19 +264,5 @@ public class MiZhuan {
 	
 	public boolean isCAN_CUN(){
 		return true;
-	}
-	
-	public void restartApp(){
-		try {
-			while(!AdbUtils.getCurrentPackage().contains("launcher")){
-				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
-			}
-			Thread.sleep(3000);
-			AdbUtils.startActivity("me.mizhuan/.ActCover");
-			Thread.sleep(30000);
-			start();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }
