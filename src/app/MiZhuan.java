@@ -107,20 +107,21 @@ public class MiZhuan {
 
 	// 从游戏赚中进入看看赚
 	public int startLooklookTaskFromBottomGame() {
-		try {
+//		try {
 			// 点击游戏赚
-			AdbUtils.click(471, 1140); 
-			Thread.sleep(1000);
-			if (!looklookManager.checkClickBottomGame()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			for (int i = 0; i < 5; i++) {
-				AdbUtils.swipe(300, 1100, 300, 500);
-				Thread.sleep(1000);
-			}
-			if (!clickEntertainmentNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
+//			AdbUtils.click(471, 1140); 
+//			Thread.sleep(1000);
+//			if (!looklookManager.checkClickBottomGame()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
+//			for (int i = 0; i < 5; i++) {
+//				AdbUtils.swipe(500, 700, 500, 300);
+//				System.out.println("swipe");
+//				Thread.sleep(1000);
+//			}
+//			if (!clickEntertainmentNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
 			if (!clickThreeSixZeroNews()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
@@ -142,10 +143,10 @@ public class MiZhuan {
 			}
 			isLooklookCompleted = true;
 			return ResultDict.COMMAND_SUCCESS;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return ResultDict.COMMAND_RESTART_APP;
-		}
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//			return ResultDict.COMMAND_RESTART_APP;
+//		}
 	}
 
 	// 点广告
@@ -188,7 +189,7 @@ public class MiZhuan {
 	// 360新闻
 	public boolean clickThreeSixZeroNews() {
 		try {
-			AdbUtils.click(360, 325);
+			AdbUtils.click(72, 510);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClick360News()) {
 				return false;
@@ -337,7 +338,7 @@ public class MiZhuan {
 	// 娱乐爆料
 	public boolean clickEntertainmentNews() {
 		try {
-			AdbUtils.click(360, 325);
+			AdbUtils.click(504, 325);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickEntertainNews()) {
 				return false;

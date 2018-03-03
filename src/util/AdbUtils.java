@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String deviceId = "CYSBBAE680946227";
+	private static String deviceId = "GEQBBBE6A2164239";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");

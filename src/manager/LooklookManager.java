@@ -9,7 +9,7 @@ public class LooklookManager {
 		
 	}
 	public boolean checkClickBottomGame(){
-		String path = AdbUtils.ScreenCapAndCut(249, 1106, 42, 42);
+		String path = AdbUtils.ScreenCapAndCut(429, 1106, 42, 42);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/game_selected.png", path);
 		System.out.printf("checkClickBottomGame sim=%f\n", sim);
 		if (sim > 0.95) {
