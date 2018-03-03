@@ -9,26 +9,27 @@ import common.ResultDict;
 import util.AdbUtils;
 import util.CutImageUtil;
 
-
-
 public class Main {
-	
+
 	public static void main(String[] args) {
-//		Timer t = new Timer();
-//    	t.schedule(new Task1(), 1000); 
-//		AdbUtils.ScreenCapAndCut(34,526 , 76, 76);
-//		for(int i=0;i<5;i++){
-//		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/",34+144*i,526 , 76, 76);
-//		System.out.println(path);
-//	}
+		 Timer t = new Timer();
+		 t.schedule(new Task1(), 1000);
+//		AdbUtils.ScreenCapAndCut(210, 50, 300, 100);
+		// for(int i=0;i<5;i++){
+		// String path = CutImageUtil.cutLocalImage("d:/1.png",
+		// "d:/",34+144*i,526 , 76, 76);
+		// System.out.println(path);
+		// }
 	}
 }
 
-class Task1 extends TimerTask{
+class Task1 extends TimerTask {
 	private MiZhuan mizhuan;
+
 	public Task1() {
 		mizhuan = new MiZhuan();
 	}
+
 	@Override
 	public void run() {
 		switch (mizhuan.start()) {
@@ -47,10 +48,10 @@ class Task1 extends TimerTask{
 			break;
 		}
 	}
-	
-	public void restartApp(){
+
+	public void restartApp() {
 		try {
-			while(!AdbUtils.getCurrentPackage().contains("launcher")){
+			while (!AdbUtils.getCurrentPackage().contains("launcher")) {
 				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
 			}
 			Thread.sleep(3000);
@@ -62,4 +63,3 @@ class Task1 extends TimerTask{
 		}
 	}
 }
-
