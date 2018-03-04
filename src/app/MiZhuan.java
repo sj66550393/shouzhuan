@@ -70,7 +70,7 @@ public class MiZhuan {
 			if (!extraBonusManager.checkClickExtraBonus()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 200; i++) {
 				Thread.sleep(500);
 				AdbUtils.swipe(300, 500, 300, 1000);
 				Thread.sleep(5000);
@@ -107,25 +107,22 @@ public class MiZhuan {
 
 	// 从游戏赚中进入看看赚
 	public int startLooklookTaskFromBottomGame() {
-//		try {
-			// 点击游戏赚
-//			AdbUtils.click(471, 1140); 
-//			Thread.sleep(1000);
-//			if (!looklookManager.checkClickBottomGame()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
-//			for (int i = 0; i < 5; i++) {
-//				AdbUtils.swipe(500, 700, 500, 300);
-//				System.out.println("swipe");
-//				Thread.sleep(1000);
-//			}
+		try {
+			 //点击游戏赚
+			AdbUtils.click(471, 1140); 
+			Thread.sleep(1000);
+			if (!looklookManager.checkClickBottomGame()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			for (int i = 0; i < 5; i++) {
+				AdbUtils.swipe(500, 700, 500, 300);
+				System.out.println("swipe");
+				Thread.sleep(1000);
+			}
 //			if (!clickEntertainmentNews()) {
 //				return ResultDict.COMMAND_RESTART_APP;
 //			}
 			if (!clickThreeSixZeroNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			if (!clickHotNews()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
 			if (!clickTurnturn()) {
@@ -143,10 +140,10 @@ public class MiZhuan {
 			}
 			isLooklookCompleted = true;
 			return ResultDict.COMMAND_SUCCESS;
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//			return ResultDict.COMMAND_RESTART_APP;
-//		}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return ResultDict.COMMAND_RESTART_APP;
+		}
 	}
 
 	// 点广告
@@ -166,13 +163,23 @@ public class MiZhuan {
 	// 热点新闻
 	public boolean clickHotNews() {
 		try {
-			AdbUtils.click(72, 510);
+			AdbUtils.click(216,510);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickHotNews()) {
 				return false;
 			}
 			for (; HotNewsNum < Contants.HOT_NEWS_NUM + 3; HotNewsNum++) {
-				swipeAndClickNews();
+				Thread.sleep(5000);
+				AdbUtils.swipe(300, 1100, 300, 500);
+				AdbUtils.click(300, 600);
+				Thread.sleep(10000);
+				if(!looklookManager.checkEnterHotNews()){
+					System.out.println("click blank");
+					AdbUtils.click(300, 800);
+				}
+				Thread.sleep(10000);
+				AdbUtils.back();
+				Thread.sleep(3000);
 				if (!looklookManager.checkClickHotNews()) {
 					return false;
 				}
@@ -190,11 +197,11 @@ public class MiZhuan {
 	public boolean clickThreeSixZeroNews() {
 		try {
 			AdbUtils.click(72, 510);
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 			if (!looklookManager.checkClick360News()) {
 				return false;
 			}
-			for (; ThreeSixZeroNewsNum < Contants.THREE_SIX_ZERO_NEWS_NUM + 4; ThreeSixZeroNewsNum++) {
+			for (; ThreeSixZeroNewsNum < Contants.THREE_SIX_ZERO_NEWS_NUM + 3; ThreeSixZeroNewsNum++) {
 				swipeAndClickNews();
 				if (!looklookManager.checkClick360News()) {
 					return false;
@@ -213,8 +220,8 @@ public class MiZhuan {
 	public void clickTuitui() {
 		try {
 			for (; tuituiNum < Contants.TUITUI_NUM; tuituiNum++) {
-				AdbUtils.click(506, 880);
-				Thread.sleep(20 * 1000);
+				AdbUtils.click(504,510);
+				Thread.sleep(7 * 1000);
 				AdbUtils.back();
 			}
 		} catch (InterruptedException e) {
@@ -227,8 +234,8 @@ public class MiZhuan {
 	public boolean clickTurnturn() {
 		try {
 			for (; tuituiNum < Contants.TURNTURN_NUM; tuituiNum++) {
-				AdbUtils.click(216, 510);
-				Thread.sleep(20 * 1000);
+				AdbUtils.click(360,510);
+				Thread.sleep(10 * 1000);
 				if (!looklookManager.checkClickTurnturn()) {
 					return false;
 				}
@@ -264,13 +271,29 @@ public class MiZhuan {
 	// 点金头条
 	public boolean clickGoldNews() {
 		try {
-			AdbUtils.click(360, 325);
+			AdbUtils.click(216,695);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickGoldNews()) {
 				return false;
 			}
-			for (; goldNewsNum < Contants.GOLD_NEWS_NUM + 4; goldNewsNum++) {
-				swipeAndClickNews2();
+			for (; goldNewsNum < Contants.GOLD_NEWS_NUM ; goldNewsNum++) {
+				Thread.sleep(5000);
+				for(int i=0;i<goldNewsNum;i++){
+				AdbUtils.swipe(300, 1100, 300, 500);
+				}
+				AdbUtils.click(300, 600);
+				Thread.sleep(10000);
+				if(!looklookManager.checkEnterGoldNews()){
+					System.out.println("click blank");
+					AdbUtils.click(300, 800);
+				}
+				Thread.sleep(10000);
+				for (int i = 0; i < 10; i++) {
+					AdbUtils.swipe(300, 1100, 300, 500);
+					Thread.sleep(1000);
+				}
+				AdbUtils.back();
+				Thread.sleep(3000);
 				if (!looklookManager.checkClickGoldNews()) {
 					return false;
 				}
@@ -287,13 +310,24 @@ public class MiZhuan {
 	// 18头条
 	public boolean clickEighteenNews() {
 		try {
-			AdbUtils.click(360, 325);
+			AdbUtils.click(360,695);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickEighteenNews()) {
 				return false;
 			}
-			for (; eighteenNum < Contants.EIGHTEEN_NEWS_NUM + 4; eighteenNum++) {
-				swipeAndClickNews2();
+			for (; eighteenNum < Contants.EIGHTEEN_NEWS_NUM; eighteenNum++) {
+				Thread.sleep(5000);
+				for(int i=0;i<eighteenNum;i++){
+				AdbUtils.swipe(300, 1100, 300, 500-20*i);
+				}
+				AdbUtils.click(300, 600);
+				Thread.sleep(10000);
+				for (int i = 0; i < 10; i++) {
+					AdbUtils.swipe(300, 1100, 300, 500);
+					Thread.sleep(1000);
+				}
+				AdbUtils.back();
+				Thread.sleep(3000);
 				if (!looklookManager.checkClickEighteenNews()) {
 					return false;
 				}
@@ -310,7 +344,7 @@ public class MiZhuan {
 	// 我爱头条
 	public boolean clickLoveNews() {
 		try {
-			AdbUtils.click(360, 325);
+			AdbUtils.click(504,695);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickLoveNews()) {
 				return false;
@@ -344,7 +378,25 @@ public class MiZhuan {
 				return false;
 			}
 			for (; entertainmentNews < Contants.ENTERTAINMENT_NEWS + 4; entertainmentNews++) {
-				swipeAndClickNews2();
+				Thread.sleep(5000);
+				AdbUtils.swipe(300, 1100, 300, 500);
+				AdbUtils.click(300, 600);
+				Thread.sleep(10000);
+				if (!looklookManager.checkEnterEntertainNews()) {
+					System.out.println("click blank");
+					AdbUtils.click(300, 800);
+					Thread.sleep(10000);
+				}
+				for (int i = 0; i < 10; i++) {
+					AdbUtils.swipe(300, 1100, 300, 500);
+					Thread.sleep(1000);
+				}
+				AdbUtils.back();
+				Thread.sleep(3000);
+				while(looklookManager.checkEnterEntertainNews()){
+					AdbUtils.back();
+					Thread.sleep(8000);
+				}
 				if (!looklookManager.checkClickEntertainNews()) {
 					return false;
 				}

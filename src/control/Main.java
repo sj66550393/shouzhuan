@@ -2,6 +2,8 @@ package control;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import app.MeiRiZhuanDian;
 import app.MiZhuan;
@@ -14,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		 Timer t = new Timer();
 		 t.schedule(new Task1(), 1000);
-//		AdbUtils.ScreenCapAndCut(210, 50, 300, 100);
+//		AdbUtils.ScreenCapAndCut(210,50, 300, 100);
 		// for(int i=0;i<5;i++){
 		// String path = CutImageUtil.cutLocalImage("d:/1.png",
 		// "d:/",34+144*i,526 , 76, 76);
@@ -25,21 +27,24 @@ public class Main {
 
 class Task1 extends TimerTask {
 	private MiZhuan mizhuan;
+	ExecutorService fixedThreadPool; 
 
 	public Task1() {
 		mizhuan = new MiZhuan();
+		 fixedThreadPool = Executors.newFixedThreadPool(4); 
 	}
 
 	@Override
 	public void run() {
 		switch (mizhuan.start()) {
 		case ResultDict.COMMAND_RESTART_APP:
-			new Thread(new Runnable() {
+			fixedThreadPool.execute(new Runnable() {
 				@Override
 				public void run() {
 					restartApp();
 				}
-			}).start();
+			});
+			
 			break;
 		case ResultDict.COMMAND_SUCCESS:
 			System.out.println("success");

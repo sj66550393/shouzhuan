@@ -29,6 +29,50 @@ public class LooklookManager {
 		}
 	}
 	
+	public boolean checkEnterEntertainNews(){
+		String path = AdbUtils.ScreenCapAndCut(124,52 ,128, 96);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/entertainment_enter.png", path);
+		System.out.printf("checkEnterEntertainNews sim=%f\n", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkEnterHotNews(){
+		String path = AdbUtils.ScreenCapAndCut(124,52 ,128, 96);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/hotnews_enter.png", path);
+		System.out.printf("checkEnterHotNews sim=%f\n", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkEnterGoldNews(){
+		String path = AdbUtils.ScreenCapAndCut(124,52 ,128, 96);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/goldnews_enter.png", path);
+		System.out.printf("checkEnterGoldNews sim=%f\n", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkEnterEighteenNews(){
+		String path = AdbUtils.ScreenCapAndCut(124,52 ,128, 96);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/eighteennews_enter.png", path);
+		System.out.printf("checkEnterEighteenNews sim=%f\n", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public boolean checkClickHotNews(){
 		String path = AdbUtils.ScreenCapAndCut(210,50, 300, 100);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/hotnews_title.png", path);
