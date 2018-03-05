@@ -62,9 +62,22 @@ public class ExtraBonusManager {
 		return true;
 	}
 	
+	public boolean checkFinishExtraBonus(){
+		String path = AdbUtils.ScreenCapAndCut(0,1094, 720,90);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_detail_use_gray.png", path);
+		System.out.printf("checkFinishExtraBonus sim=%f", sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	private boolean isHuaweiUpdateActivity(){
 		return "com.huawei.android.hwouc/.ui.activities.firmware.FirmwareNewVersionDetailsActivity".equals(AdbUtils.getTopActivity());
 	}
+	
+	
 	
 	
 }

@@ -20,7 +20,7 @@ public class MiZhuan {
 	private int eighteenNum = 0; // 18头条
 	private int loveNewsNum = 0; // 我爱头条 9篇
 	private int DEFAULT_EXTRABONUS_TIME = 1;
-	private boolean isExtraBonusCompleted = true;
+	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
 
 	ExtraBonusManager extraBonusManager;
@@ -78,10 +78,18 @@ public class MiZhuan {
 				Thread.sleep(3000);
 				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
+					if(extraBonusManager.checkFinishExtraBonus()){
+						isExtraBonusCompleted = true;
+						return ResultDict.COMMAND_SUCCESS;
+					}
 					AdbUtils.back();
 					Thread.sleep(5000);
 					continue;
 				case ResultDict.COMMAND_RESTART_APP:
+					if(extraBonusManager.checkFinishExtraBonus()){
+						isExtraBonusCompleted = true;
+						return ResultDict.COMMAND_SUCCESS;
+					}
 					return ResultDict.COMMAND_RESTART_APP;
 				case ResultDict.COMMAND_SUCCESS:
 					break;
@@ -119,15 +127,16 @@ public class MiZhuan {
 				System.out.println("swipe");
 				Thread.sleep(1000);
 			}
-//			if (!clickEntertainmentNews()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
+			if (!clickEntertainmentNews()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
 			if (!clickThreeSixZeroNews()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
 			if (!clickTurnturn()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
+			
 			clickTuitui();
 			if (!clickGoldNews()) {
 				return ResultDict.COMMAND_RESTART_APP;
@@ -219,9 +228,10 @@ public class MiZhuan {
 	// 推推乐
 	public void clickTuitui() {
 		try {
+			Thread.sleep(10000);
 			for (; tuituiNum < Contants.TUITUI_NUM; tuituiNum++) {
 				AdbUtils.click(504,510);
-				Thread.sleep(7 * 1000);
+				Thread.sleep(10 * 1000);
 				AdbUtils.back();
 			}
 		} catch (InterruptedException e) {
