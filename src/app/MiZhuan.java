@@ -3,6 +3,7 @@ package app;
 import common.Contants;
 import common.ResultDict;
 import manager.ExtraBonusManager;
+import manager.InstallAppManager;
 import manager.LooklookManager;
 import util.AdbUtils;
 
@@ -25,10 +26,12 @@ public class MiZhuan {
 
 	ExtraBonusManager extraBonusManager;
 	LooklookManager looklookManager;
+	InstallAppManager installAppManager;
 
 	public MiZhuan() {
 		extraBonusManager = new ExtraBonusManager();
 		looklookManager = new LooklookManager();
+		installAppManager = new InstallAppManager();
 	}
 
 	public int start() {
@@ -51,6 +54,17 @@ public class MiZhuan {
 
 	// 安装任务
 	public void startInstallAppTask() {
+		// 点击进入详情页
+		for (int i = 0; i < 10; i++) {
+			AdbUtils.click(100, 200);
+			if(!installAppManager.checkEnterAppDetail()){
+				AdbUtils.back();
+				continue;
+			}
+			//点击下载安装或者打开
+			AdbUtils.click(100, 200);
+			
+		}
 
 	}
 
@@ -78,10 +92,10 @@ public class MiZhuan {
 				Thread.sleep(3000);
 				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
-					if(extraBonusManager.checkFinishExtraBonus()){
-						isExtraBonusCompleted = true;
-						return ResultDict.COMMAND_SUCCESS;
-					}
+//					if(extraBonusManager.checkFinishExtraBonus()){
+//						isExtraBonusCompleted = true;
+//						return ResultDict.COMMAND_SUCCESS;
+//					}
 					AdbUtils.back();
 					Thread.sleep(5000);
 					continue;
