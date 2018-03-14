@@ -21,8 +21,10 @@ public class MiZhuan {
 	private int eighteenNum = 0; // 18头条
 	private int loveNewsNum = 0; // 我爱头条 9篇
 	private int DEFAULT_EXTRABONUS_TIME = 1;
+	private int DEFAULT_INSTALL_COUNT  =10;
 	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
+	private boolean isInstallCompleted = false;
 
 	ExtraBonusManager extraBonusManager;
 	LooklookManager looklookManager;
@@ -53,19 +55,82 @@ public class MiZhuan {
 	}
 
 	// 安装任务
-	public void startInstallAppTask() {
-		// 点击进入详情页
-		for (int i = 0; i < 10; i++) {
-			AdbUtils.click(100, 200);
-			if(!installAppManager.checkEnterAppDetail()){
-				AdbUtils.back();
-				continue;
+	public int startInstallAppTask() {
+		try {
+			// 点击应用赚
+			AdbUtils.click(270, 1140);
+			Thread.sleep(1000);
+			if (!extraBonusManager.checkClickBottomApplication()) {
+				return ResultDict.COMMAND_RESTART_APP;
 			}
-			//点击下载安装或者打开
-			AdbUtils.click(100, 200);
-			
-		}
+			// 点击应用
+			AdbUtils.click(120, 192);
+			if (!installAppManager.checkClickApplicationButton()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
 
+			int installCount = 0;
+			// 点击进入详情页
+			for (int i = 0; i < 100; i++) {
+				if(installCount == DEFAULT_INSTALL_COUNT){
+					isInstallCompleted = true;
+					break;
+				}	
+				// 点击进入详情页
+				AdbUtils.click(360, 318);
+				if (!installAppManager.checkEnterAppDetail()) {
+					AdbUtils.back();
+					continue;
+				}
+				if (!installAppManager.checkBottomContinueExperience()) {
+					// 点击下载安装或者打开
+					AdbUtils.click(360, 1139);
+					Thread.sleep(20 * 1000);
+					if (!installAppManager.checkTL00Install()) {
+						return ResultDict.COMMAND_RESTART_APP;
+					}
+					// 点击安装
+					AdbUtils.click(594, 1080);
+					Thread.sleep(20 * 1000);
+					// 查看是否完成
+					if (!installAppManager.checkTL00InstallComplete()) {
+						return ResultDict.COMMAND_RESTART_APP;
+					}
+					// 点击完成
+					AdbUtils.click(195, 1080);
+					if (!installAppManager.checkTL00DeletePackage()) {
+						return ResultDict.COMMAND_RESTART_APP;
+					}
+					// 点击删除
+					AdbUtils.click(507, 698);
+					Thread.sleep(1000);
+					installCount++;
+				}
+				if(!installAppManager.checkBottomContinueExperience()){
+					return ResultDict.COMMAND_RESTART_APP;
+				}
+				//点击继续体验
+				AdbUtils.click(360, 1139);
+				Thread.sleep(3000);
+				if(!installAppManager.checkEnterApp()){
+					return ResultDict.COMMAND_RESTART_APP;
+				}
+				Thread.sleep(5*60*1000);
+				String name = AdbUtils.getCurrentPackage();
+				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
+				Thread.sleep(5000);
+				if(!installAppManager.checkKillApp()){
+					return ResultDict.COMMAND_RESTART_APP;
+				}
+				AdbUtils.back();
+				Thread.sleep(1000);
+				AdbUtils.swipe(300,800,300,665);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	// 额外奖励

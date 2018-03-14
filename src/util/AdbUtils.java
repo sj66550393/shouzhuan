@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String deviceId = "CYSBBAE680109448";
+	private static String deviceId = "GEQBBAE672607770";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
@@ -120,6 +120,29 @@ public class AdbUtils {
 		}
     }
     
+    public static void cleanApp(){
+    	String[] defaultPackages=  {""};
+    	try {
+			String str = printf(adb + "pm list package");
+			String[] strs = str.split("\n");
+			for(int i=0;i<strs.length;i++){
+				strs[i] = strs[i].substring(8);
+				String[] splitStr = strs[i].split("\\.");
+				if(splitStr.length > 1){
+					if((!splitStr[1].equals("android")) && (!splitStr[1].equals("huawei")) && (!splitStr[1].equals("google")) && (!splitStr[1].equals("mediatek")) &&(!splitStr[1].equals(""))){
+						System.out.println(strs[i].trim());
+						killProcess(strs[i].trim());
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
    
 
 }
+ 
