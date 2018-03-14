@@ -22,7 +22,7 @@ public class MiZhuan {
 	private int loveNewsNum = 0; // 我爱头条 9篇
 	private int DEFAULT_EXTRABONUS_TIME = 1;
 	private int DEFAULT_INSTALL_COUNT  =10;
-	private boolean isExtraBonusCompleted = false;
+	private boolean isExtraBonusCompleted = true;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = false;
 
@@ -43,6 +43,11 @@ public class MiZhuan {
 		int result = ResultDict.COMMAND_SUCCESS;
 		if (!isExtraBonusCompleted) {
 			result = startSigninAppTask();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
+		if(!isInstallCompleted){
+			result = startInstallAppTask();
 			if (ResultDict.COMMAND_SUCCESS != result)
 				return result;
 		}
@@ -78,8 +83,11 @@ public class MiZhuan {
 				}	
 				// 点击进入详情页
 				AdbUtils.click(360, 318);
+				Thread.sleep(2000);
 				if (!installAppManager.checkEnterAppDetail()) {
 					AdbUtils.back();
+					Thread.sleep(1000);
+					AdbUtils.swipe(300,800,300,665);
 					continue;
 				}
 				if (!installAppManager.checkBottomContinueExperience()) {

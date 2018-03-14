@@ -22,7 +22,7 @@ public class InstallAppManager {
 	}
 	
 	public boolean checkClickApplicationButton(){
-		String path = AdbUtils.ScreenCapAndCut(0, 150, 240, 235);
+		String path = AdbUtils.ScreenCapAndCut(0, 150, 240, 85);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_application.png", path);
 		System.out.printf("checkClickApplicationButton sim=%f", sim);
 		if (sim > 0.95) {
