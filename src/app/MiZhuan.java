@@ -6,12 +6,13 @@ import manager.ExtraBonusManager;
 import manager.InstallAppManager;
 import manager.LooklookManager;
 import util.AdbUtils;
+import util.DateUtils;
+import util.FileUtils;
 
 public class MiZhuan {
 
 	private int redPackageNum = 0; // 拆红包 5篇
 	private int todayMustNum = 0; // 今日必看 6篇
-
 	private int entertainmentNews = 0; // 娱乐爆料 5篇
 	private int ThreeSixZeroNewsNum = 0; // 360新闻 每天6篇
 	private int HotNewsNum = 0; // 热点新闻 每天5条
@@ -21,10 +22,11 @@ public class MiZhuan {
 	private int eighteenNum = 0; // 18头条
 	private int loveNewsNum = 0; // 我爱头条 9篇
 	private int DEFAULT_EXTRABONUS_TIME = 1;
+	private int INSTALL_EXPERIWNCE_TIME = 5;
 	private int DEFAULT_INSTALL_COUNT  =10;
-	private boolean isExtraBonusCompleted = true;
+	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
-	private boolean isInstallCompleted = false;
+	private boolean isInstallCompleted = true;
 
 	ExtraBonusManager extraBonusManager;
 	LooklookManager looklookManager;
@@ -56,7 +58,7 @@ public class MiZhuan {
 			if (ResultDict.COMMAND_SUCCESS != result)
 				return result;
 		}
-		return ResultDict.COMMAND_SUCCESS;
+			return ResultDict.COMMAND_SUCCESS;
 	}
 
 	// 安装任务
@@ -99,7 +101,7 @@ public class MiZhuan {
 					}
 					// 点击安装
 					AdbUtils.click(594, 1080);
-					Thread.sleep(20 * 1000);
+					Thread.sleep(40 * 1000);
 					// 查看是否完成
 					if (!installAppManager.checkTL00InstallComplete()) {
 						return ResultDict.COMMAND_RESTART_APP;
@@ -123,7 +125,7 @@ public class MiZhuan {
 				if(!installAppManager.checkEnterApp()){
 					return ResultDict.COMMAND_RESTART_APP;
 				}
-				Thread.sleep(5*60*1000);
+				Thread.sleep(2*1000);
 				String name = AdbUtils.getCurrentPackage();
 				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
 				Thread.sleep(5000);
@@ -144,6 +146,16 @@ public class MiZhuan {
 	// 额外奖励
 	public int startSigninAppTask() {
 		try {
+			boolean leftSwipe = false;
+			while (!(DateUtils.getHour() >= 8 && DateUtils.getMinute() > 30)) {
+				if (leftSwipe) {
+					AdbUtils.swipe(100, 500, 400, 500);
+				} else {
+					AdbUtils.swipe(400, 500, 100, 500);
+				}
+				Thread.sleep(1 * 60 * 1000);
+				leftSwipe = !leftSwipe;
+			}
 			// 点击应用赚
 			AdbUtils.click(270, 1140); 
 			Thread.sleep(1000);
@@ -157,7 +169,7 @@ public class MiZhuan {
 			if (!extraBonusManager.checkClickExtraBonus()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
-			for (int i = 0; i < 200; i++) {
+			while (true) {
 				Thread.sleep(500);
 				AdbUtils.swipe(300, 500, 300, 1000);
 				Thread.sleep(5000);
@@ -165,10 +177,15 @@ public class MiZhuan {
 				Thread.sleep(3000);
 				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
-//					if(extraBonusManager.checkFinishExtraBonus()){
-//						isExtraBonusCompleted = true;
-//						return ResultDict.COMMAND_SUCCESS;
-//					}
+					if (extraBonusManager.checkFinishExtraBonus()) {
+						if (!(DateUtils.getHour() >= 10 && DateUtils.getMinute() > 30)) {
+							Thread.sleep(5 * 60 * 1000);
+							continue;
+						} else {
+							isExtraBonusCompleted = true;
+							return ResultDict.COMMAND_SUCCESS;
+						}
+					}
 					AdbUtils.back();
 					Thread.sleep(5000);
 					continue;
@@ -192,8 +209,6 @@ public class MiZhuan {
 				}
 				Thread.sleep(5000);
 			}
-			isExtraBonusCompleted = true;
-			return ResultDict.COMMAND_SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResultDict.COMMAND_RESTART_APP;
@@ -542,5 +557,35 @@ public class MiZhuan {
 
 	public boolean isCAN_CUN() {
 		return true;
+	}
+	
+	public void printDoingApp() {
+		// 点击进入详情页
+		try {
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < 100; i++) {
+				// 点击进入详情页
+				AdbUtils.click(360, 318);
+				Thread.sleep(2000);
+				if (!installAppManager.checkBottomContinueExperience()) {
+					// 点击下载安装或者打开
+					AdbUtils.click(360, 1139);
+					Thread.sleep(20 * 1000);
+
+				}
+				String name = AdbUtils.getCurrentPackage();
+				sb.append(name + "\n");
+				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
+				Thread.sleep(5000);
+				AdbUtils.back();
+				Thread.sleep(1000);
+				AdbUtils.swipe(300, 800, 300, 665);
+				System.out.println(sb.toString());
+			}
+			FileUtils.String2File("d:/doingApp.txt", sb.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

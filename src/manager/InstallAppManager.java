@@ -96,7 +96,7 @@ public class InstallAppManager {
 	}
 	
 	public boolean checkKillApp() {
-		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
+		String path = AdbUtils.ScreenCapAndCut(287, 72, 146, 46);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/app_detail.png", path);
 		System.out.printf("checkKillApp sim=%f", sim);
 		if (sim > 0.95) {

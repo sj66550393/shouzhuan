@@ -1,11 +1,13 @@
 package util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
 	private static String deviceId = "GEQBBAE672607770";
+	private static String storageDes = "d:/";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
@@ -106,11 +108,16 @@ public class AdbUtils {
     
     public static String ScreenCapAndCut(int x, int y , int width , int height){
     	try {
+    		String desPath = storageDes + "/" + deviceId;
+    		File file = new File(desPath);
+    		if(!file.exists()){
+    			file.mkdirs();
+    		}
     		exec(adb + "screencap -p /sdcard/1.png");
     		Thread.sleep(3000);
-    		exec("adb -s " + deviceId + " pull sdcard/1.png d:/");
+    		exec("adb -s " + deviceId + " pull sdcard/1.png " + desPath);
     		Thread.sleep(3000);
-    		String path  = CutImageUtil.cutLocalImage("d:/1.png", "d:/", x, y, width, height);
+    		String path  = CutImageUtil.cutLocalImage(desPath + "/1.png", desPath + "/", x, y, width, height);
     		System.out.println(path);
     		return path;
 		} catch (Exception e) {
