@@ -147,7 +147,8 @@ public class MiZhuan {
 	public int startSigninAppTask() {
 		try {
 			boolean leftSwipe = false;
-			while (!(DateUtils.getHour() >= 8 && DateUtils.getMinute() > 30)) {
+			while (!(DateUtils.getHour() >= 23 && DateUtils.getMinute() > 43)) {
+				System.out.println("waiting for 8:30");
 				if (leftSwipe) {
 					AdbUtils.swipe(100, 500, 400, 500);
 				} else {
@@ -178,7 +179,8 @@ public class MiZhuan {
 				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
 					if (extraBonusManager.checkFinishExtraBonus()) {
-						if (!(DateUtils.getHour() >= 10 && DateUtils.getMinute() > 30)) {
+						if (!(DateUtils.getHour() >= 23 && DateUtils.getMinute() > 44 )) {
+							System.out.println("waiting for 10:30");
 							Thread.sleep(5 * 60 * 1000);
 							continue;
 						} else {

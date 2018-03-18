@@ -15,8 +15,8 @@ import util.DateUtils;
 public class Main {
 
 	public static void main(String[] args) {
-//		 Timer t = new Timer();
-//		 t.schedule(new Task1(), 1000);
+		 Timer t = new Timer();
+		 t.schedule(new Task1(), 1000);
 //		AdbUtils.ScreenCapAndCut(300,1114,120,50);
 		// for(int i=0;i<5;i++){
 		// String path = CutImageUtil.cutLocalImage("d:/1.png",
@@ -24,8 +24,8 @@ public class Main {
 		// System.out.println(path);
 		// }
 //		AdbUtils.cleanApp();
-		MiZhuan mizhuan = new MiZhuan();
-		mizhuan.printDoingApp();
+//		MiZhuan mizhuan = new MiZhuan();
+//		mizhuan.printDoingApp();
 	}
 }
 
@@ -45,6 +45,7 @@ class Task1 extends TimerTask {
 			fixedThreadPool.execute(new Runnable() {
 				@Override
 				public void run() {
+					System.out.println("restart app");
 					restartApp();
 				}
 			});

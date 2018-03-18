@@ -19,7 +19,7 @@ public class ExtraBonusManager {
 	public boolean checkClickBottomApplication() {
 		String path = AdbUtils.ScreenCapAndCut(249, 1106, 42, 42);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_selected.png", path);
-		System.out.printf("checkClickBottomApplication sim=%f", sim);
+		System.out.printf("checkClickBottomApplication sim=%f\n", sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -30,7 +30,7 @@ public class ExtraBonusManager {
 	public boolean checkClickExtraBonus(){
 		String path = AdbUtils.ScreenCapAndCut(480, 150, 240, 85);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_reward_selected.png", path);
-		System.out.printf("checkClickExtraBonus sim=%f", sim);
+		System.out.printf("checkClickExtraBonus sim=%f\n", sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -41,7 +41,7 @@ public class ExtraBonusManager {
 	public int checkEnterApp(){
 		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/app_detail.png", path);
-		System.out.printf("checkEnterApp sim=%f", sim);
+		System.out.printf("checkEnterApp sim=%f\n", sim);
 		if (sim > 0.95) {
 			return ResultDict.COMMAND_BACK;
 		}
@@ -65,7 +65,7 @@ public class ExtraBonusManager {
 	public boolean checkFinishExtraBonus(){
 		String path = AdbUtils.ScreenCapAndCut(0,1094, 720,90);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_detail_use_gray.png", path);
-		System.out.printf("checkFinishExtraBonus sim=%f", sim);
+		System.out.printf("checkFinishExtraBonus sim=%f\n", sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -76,8 +76,5 @@ public class ExtraBonusManager {
 	private boolean isHuaweiUpdateActivity(){
 		return "com.huawei.android.hwouc/.ui.activities.firmware.FirmwareNewVersionDetailsActivity".equals(AdbUtils.getTopActivity());
 	}
-	
-	
-	
-	
+
 }
