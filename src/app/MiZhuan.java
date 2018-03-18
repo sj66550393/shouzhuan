@@ -146,8 +146,10 @@ public class MiZhuan {
 	// ¶îÍâ½±Àø
 	public int startSigninAppTask() {
 		try {
+			String lastPackage = "";
+			int appUseTime = 1;
 			boolean leftSwipe = false;
-			while (!(DateUtils.getHour() >= 23 && DateUtils.getMinute() > 43)) {
+			while (!(DateUtils.getHour() >= 8 && DateUtils.getMinute() > 30)) {
 				System.out.println("waiting for 8:30");
 				if (leftSwipe) {
 					AdbUtils.swipe(100, 500, 400, 500);
@@ -179,7 +181,9 @@ public class MiZhuan {
 				switch (extraBonusManager.checkEnterApp()) {
 				case ResultDict.COMMAND_BACK:
 					if (extraBonusManager.checkFinishExtraBonus()) {
-						if (!(DateUtils.getHour() >= 23 && DateUtils.getMinute() > 44 )) {
+						AdbUtils.back();
+						Thread.sleep(5000);
+						if (!(DateUtils.getHour() >= 10 && DateUtils.getMinute() > 30 )) {
 							System.out.println("waiting for 10:30");
 							Thread.sleep(5 * 60 * 1000);
 							continue;
@@ -188,8 +192,6 @@ public class MiZhuan {
 							return ResultDict.COMMAND_SUCCESS;
 						}
 					}
-					AdbUtils.back();
-					Thread.sleep(5000);
 					continue;
 				case ResultDict.COMMAND_RESTART_APP:
 					if(extraBonusManager.checkFinishExtraBonus()){
@@ -202,8 +204,14 @@ public class MiZhuan {
 				default:
 					break;
 				}
-				Thread.sleep(DEFAULT_EXTRABONUS_TIME * 70 * 1000);
+				if(lastPackage.equals(AdbUtils.getCurrentPackage())){
+					appUseTime++;
+				}else{
+					appUseTime = 1;
+				}
+				Thread.sleep(appUseTime * 70 * 1000);
 				String name = AdbUtils.getCurrentPackage();
+				lastPackage = AdbUtils.getCurrentPackage();
 				AdbUtils.killProcess(AdbUtils.getCurrentPackage());
 				Thread.sleep(5000);
 				if (!extraBonusManager.checkKillApp(name)) {
