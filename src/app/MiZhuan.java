@@ -2,12 +2,14 @@ package app;
 
 import common.Contants;
 import common.ResultDict;
+import control.Main;
 import manager.ExtraBonusManager;
 import manager.InstallAppManager;
 import manager.LooklookManager;
 import util.AdbUtils;
 import util.DateUtils;
 import util.FileUtils;
+import util.Log;
 
 public class MiZhuan {
 
@@ -23,7 +25,7 @@ public class MiZhuan {
 	private int loveNewsNum = 0; // 我爱头条 9篇
 	private int DEFAULT_EXTRABONUS_TIME = 1;
 	private int INSTALL_EXPERIWNCE_TIME = 5;
-	private int DEFAULT_INSTALL_COUNT  =10;
+	private int DEFAULT_INSTALL_COUNT  =3;
 	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = true;
@@ -39,6 +41,7 @@ public class MiZhuan {
 	}
 
 	public int start() {
+		Log.log.info("start");
 		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
 			return ResultDict.COMMAND_RESTART_APP;
 		}
@@ -96,7 +99,7 @@ public class MiZhuan {
 					// 点击下载安装或者打开
 					AdbUtils.click(360, 1139);
 					Thread.sleep(20 * 1000);
-					if (!installAppManager.checkTL00Install()) {
+					if ((!installAppManager.checkTL00Install()) && (!installAppManager.checkTL00Install2())) {
 						return ResultDict.COMMAND_RESTART_APP;
 					}
 					// 点击安装

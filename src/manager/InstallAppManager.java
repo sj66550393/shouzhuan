@@ -2,6 +2,7 @@ package manager;
 
 import common.ResultDict;
 import util.AdbUtils;
+import util.Log;
 import util.PicCompareUtils;
 
 public class InstallAppManager {
@@ -9,12 +10,12 @@ public class InstallAppManager {
 	public boolean checkEnterAppDetail(){
 		String path = AdbUtils.ScreenCapAndCut(95,361,200,50);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_firstinstall.png", path);
-		System.out.printf("checkEnterAppDetail_install_firstinstall sim=%f\n", sim);
+		Log.log.info("checkEnterAppDetail_install_firstinstall sim="+sim);
 		if (sim < 0.95) {
 			return false;
 		}
 		float sim2 = PicCompareUtils.comparePicByFingerPrint("res/install_firstregister.png", path);
-		System.out.printf("checkEnterAppDetail_install_firstregister sim=%f\n", sim);
+		Log.log.info("checkEnterAppDetail_install_firstregister sim="+sim);
 		if (sim2 < 0.95) {
 			return false;
 		}
@@ -24,7 +25,7 @@ public class InstallAppManager {
 	public boolean checkClickApplicationButton(){
 		String path = AdbUtils.ScreenCapAndCut(0, 150, 240, 85);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_application.png", path);
-		System.out.printf("checkClickApplicationButton sim=%f\n", sim);
+		Log.log.info("checkClickApplicationButton sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -35,7 +36,18 @@ public class InstallAppManager {
 	public boolean checkTL00Install() {
 		String path = AdbUtils.ScreenCapAndCut(497,1032, 193,96);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_CUN_TL00_before_install.png", path);
-		System.out.printf("checkTL00Install sim=%f\n", sim);
+		Log.log.info("checkTL00Install sim="+sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean checkTL00Install2() {
+		String path = AdbUtils.ScreenCapAndCut(360,1032, 330,96);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_CUN_TL00_before_install2.png", path);
+		Log.log.info("checkTL00Install sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -46,7 +58,7 @@ public class InstallAppManager {
 	public boolean checkTL00InstallComplete(){
 		String path = AdbUtils.ScreenCapAndCut(30,1032, 330,96);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_CUN_TL_install_complete.png", path);
-		System.out.printf("checkTL00InstallComplete sim=%f\n", sim);
+		Log.log.info("checkTL00InstallComplete sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -58,7 +70,7 @@ public class InstallAppManager {
 	public boolean checkBottomInstantInstall(){
 		String path = AdbUtils.ScreenCapAndCut(300,1114,120,50);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_detail_bottom_install.png", path);
-		System.out.printf("checkBottomInstantInstall sim=%f\n", sim);
+		Log.log.info("checkBottomInstantInstall sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -69,7 +81,7 @@ public class InstallAppManager {
 	public boolean checkBottomContinueExperience(){
 		String path = AdbUtils.ScreenCapAndCut(300,1114,120,50);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_detail_bottom_experience.png", path);
-		System.out.printf("checkBottomContinueExperience sim=%f\n", sim);
+		Log.log.info("checkBottomContinueExperience sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -80,7 +92,7 @@ public class InstallAppManager {
 	public boolean checkTL00DeletePackage() {
 		String path = AdbUtils.ScreenCapAndCut(360,642,507,698);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/install_CUN_TL00_delete_package.png", path);
-		System.out.printf("checkTL00DeletePackage sim=%f\n", sim);
+		Log.log.info("checkTL00DeletePackage sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -98,7 +110,7 @@ public class InstallAppManager {
 	public boolean checkKillApp() {
 		String path = AdbUtils.ScreenCapAndCut(287, 72, 146, 46);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/app_detail.png", path);
-		System.out.printf("checkKillApp sim=%f\n", sim);
+		Log.log.info("checkKillApp sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {

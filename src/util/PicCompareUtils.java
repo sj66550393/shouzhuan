@@ -43,7 +43,7 @@ public class PicCompareUtils {
 	public static void compareImage(String imgPath1, String imgPath2) {
 		String[] images = { imgPath1, imgPath2 };
 		if (images.length == 0) {
-			System.out.println("Usage >java BMPLoader ImageFile.bmp");
+			Log.log.info("Usage >java BMPLoader ImageFile.bmp");
 			System.exit(0);
 		}
 
@@ -117,7 +117,7 @@ public class PicCompareUtils {
 		if (busi == 0) {
 			baifen = "100";
 		}
-		System.out.println("相似像素数量：" + xiangsi + " 不相似像素数量：" + busi + " 相似率：" + Integer.parseInt(baifen) + "%");
+		Log.log.info("相似像素数量：" + xiangsi + " 不相似像素数量：" + busi + " 相似率：" + Integer.parseInt(baifen) + "%");
 	}
 	
 	public static float comparePicByFingerPrint(String path1 , String path2){

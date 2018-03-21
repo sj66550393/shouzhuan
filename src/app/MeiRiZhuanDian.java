@@ -2,6 +2,7 @@ package app;
 
 import common.Contants;
 import util.AdbUtils;
+import util.Log;
 
 public class MeiRiZhuanDian {
 	private int NewsPressNum = 0;    //新闻阅读 每天80条
@@ -130,7 +131,7 @@ public class MeiRiZhuanDian {
 	}
 	//头条新闻
 	public void startTopNews(){
-		System.out.println("topNeesNum = " + topNewsNum);
+		Log.log.info("topNeesNum = " + topNewsNum);
 		if(topNewsNum == Contants.TOP_NEWS_NUM)
 			return ;
 		AdbUtils.click(210, 300);

@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	private static String deviceId = "CYSBBAE680109448";
-	private static String storageDes = "d:/";
+	public static String deviceId = "GEQBBBE6A2164239";
+	public static String storageDes = "d:/";
+	public static String storageDir = storageDes + deviceId + "/";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
     public static String getTopActivity(){
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
@@ -118,7 +119,7 @@ public class AdbUtils {
     		exec("adb -s " + deviceId + " pull sdcard/1.png " + desPath);
     		Thread.sleep(3000);
     		String path  = CutImageUtil.cutLocalImage(desPath + "/1.png", desPath + "/", x, y, width, height);
-    		System.out.println(path);
+    		Log.log.info(path);
     		return path;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -137,7 +138,7 @@ public class AdbUtils {
 				String[] splitStr = strs[i].split("\\.");
 				if(splitStr.length > 1){
 					if((!splitStr[1].equals("android")) && (!splitStr[1].equals("huawei")) && (!splitStr[1].equals("google")) && (!splitStr[1].equals("mediatek")) &&(!splitStr[1].equals(""))){
-						System.out.println(strs[i].trim());
+						Log.log.info(strs[i].trim());
 						killProcess(strs[i].trim());
 					}
 				}

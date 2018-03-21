@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import PicCompare.FingerPrint;
 import common.ResultDict;
 import util.AdbUtils;
+import util.Log;
 import util.PicCompareUtils;
 
 public class ExtraBonusManager {
@@ -19,7 +20,7 @@ public class ExtraBonusManager {
 	public boolean checkClickBottomApplication() {
 		String path = AdbUtils.ScreenCapAndCut(249, 1106, 42, 42);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_selected.png", path);
-		System.out.printf("checkClickBottomApplication sim=%f\n", sim);
+		Log.log.info("checkClickBottomApplication sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -30,7 +31,7 @@ public class ExtraBonusManager {
 	public boolean checkClickExtraBonus(){
 		String path = AdbUtils.ScreenCapAndCut(480, 150, 240, 85);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_reward_selected.png", path);
-		System.out.printf("checkClickExtraBonus sim=%f\n", sim);
+		Log.log.info("checkClickExtraBonus sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
@@ -41,7 +42,7 @@ public class ExtraBonusManager {
 	public int checkEnterApp(){
 		String path = AdbUtils.ScreenCapAndCut(287, 72, 433, 118);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/app_detail.png", path);
-		System.out.printf("checkEnterApp sim=%f\n", sim);
+		Log.log.info("checkEnterApp sim="+sim);
 		if (sim > 0.95) {
 			return ResultDict.COMMAND_BACK;
 		}
@@ -55,7 +56,7 @@ public class ExtraBonusManager {
 	}
 	
 	public boolean checkKillApp(String name){
-		System.out.println("checkKillApp");
+		Log.log.info("checkKillApp");
 		if(!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")){
 			return false;
 		}
@@ -65,7 +66,7 @@ public class ExtraBonusManager {
 	public boolean checkFinishExtraBonus(){
 		String path = AdbUtils.ScreenCapAndCut(0,1094, 720,90);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_detail_use_gray.png", path);
-		System.out.printf("checkFinishExtraBonus sim=%f\n", sim);
+		Log.log.info("checkFinishExtraBonus sim="+sim);
 		if (sim > 0.95) {
 			return true;
 		} else {
