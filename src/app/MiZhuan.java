@@ -153,7 +153,7 @@ public class MiZhuan {
 			int appUseTime = 1;
 			boolean leftSwipe = false;
 			while (!(DateUtils.getHour() >= 8 && DateUtils.getMinute() > 30)) {
-				System.out.println("waiting for 8:30");
+				Log.log.info("waiting for 8:30");
 				if (leftSwipe) {
 					AdbUtils.swipe(100, 500, 400, 500);
 				} else {
@@ -187,7 +187,7 @@ public class MiZhuan {
 						AdbUtils.back();
 						Thread.sleep(5000);
 						if (!(DateUtils.getHour() >= 10 && DateUtils.getMinute() > 30 )) {
-							System.out.println("waiting for 10:30");
+							Log.log.info("waiting for 10:30");
 							Thread.sleep(5 * 60 * 1000);
 							continue;
 						} else {
@@ -239,7 +239,7 @@ public class MiZhuan {
 			}
 			for (int i = 0; i < 5; i++) {
 				AdbUtils.swipe(500, 700, 500, 300);
-				System.out.println("swipe");
+				Log.log.info("swipe");
 				Thread.sleep(1000);
 			}
 //			if (!clickEntertainmentNews()) {
@@ -298,7 +298,7 @@ public class MiZhuan {
 				AdbUtils.click(300, 600);
 				Thread.sleep(10000);
 				if(!looklookManager.checkEnterHotNews()){
-					System.out.println("click blank");
+					Log.log.info("click blank");
 					AdbUtils.click(300, 800);
 				}
 				Thread.sleep(10000);
@@ -409,7 +409,7 @@ public class MiZhuan {
 				AdbUtils.click(300, 600);
 				Thread.sleep(10000);
 				if(!looklookManager.checkEnterGoldNews()){
-					System.out.println("click blank");
+					Log.log.info("click blank");
 					AdbUtils.click(300, 800);
 				}
 				Thread.sleep(10000);
@@ -508,7 +508,7 @@ public class MiZhuan {
 				AdbUtils.click(300, 600);
 				Thread.sleep(10000);
 				if (!looklookManager.checkEnterEntertainNews()) {
-					System.out.println("click blank");
+					Log.log.info("click blank");
 					AdbUtils.click(300, 800);
 					Thread.sleep(10000);
 				}
@@ -593,7 +593,7 @@ public class MiZhuan {
 				AdbUtils.back();
 				Thread.sleep(1000);
 				AdbUtils.swipe(300, 800, 300, 665);
-				System.out.println(sb.toString());
+				Log.log.info(sb.toString());
 			}
 			FileUtils.String2File("d:/doingApp.txt", sb.toString());
 		} catch (Exception e) {
