@@ -26,7 +26,7 @@ public class MiZhuan {
 	private int DEFAULT_EXTRABONUS_TIME = 1;
 	private int INSTALL_EXPERIWNCE_TIME = 5;
 	private int DEFAULT_INSTALL_COUNT  =3;
-	private boolean isExtraBonusCompleted = true;
+	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = true;
 
@@ -41,7 +41,6 @@ public class MiZhuan {
 	}
 
 	public int start() {
-		Log.log.info("start");
 		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
 			return ResultDict.COMMAND_RESTART_APP;
 		}
@@ -152,7 +151,7 @@ public class MiZhuan {
 			String lastPackage = "";
 			int appUseTime = 1;
 			boolean leftSwipe = false;
-			while (!(DateUtils.getHour() >= 8 && DateUtils.getMinute() > 30)) {
+			while (!((DateUtils.getHour() > 8) || ((DateUtils.getHour() == 8) && (DateUtils.getMinute() > 30)))) {
 				Log.log.info("waiting for 8:30");
 				if (leftSwipe) {
 					AdbUtils.swipe(100, 500, 400, 500);
@@ -186,7 +185,9 @@ public class MiZhuan {
 					if (extraBonusManager.checkFinishExtraBonus()) {
 						AdbUtils.back();
 						Thread.sleep(5000);
-						if (!(DateUtils.getHour() >= 10 && DateUtils.getMinute() > 30 )) {
+						System.out.println((DateUtils.getHour() > 23));
+						System.out.println((DateUtils.getHour() == 23) && (DateUtils.getMinute() > 30));
+						if (!((DateUtils.getHour() > 23) || ((DateUtils.getHour() == 23) && (DateUtils.getMinute() > 45)))) {
 							Log.log.info("waiting for 10:30");
 							Thread.sleep(5 * 60 * 1000);
 							continue;
@@ -231,34 +232,32 @@ public class MiZhuan {
 	// 从游戏赚中进入看看赚
 	public int startLooklookTaskFromBottomGame() {
 		try {
-			 //点击游戏赚
-			AdbUtils.click(471, 1140); 
+			// 点击游戏赚
+			AdbUtils.click(471, 1140);
 			Thread.sleep(1000);
 			if (!looklookManager.checkClickBottomGame()) {
 				return ResultDict.COMMAND_RESTART_APP;
 			}
 			for (int i = 0; i < 5; i++) {
 				AdbUtils.swipe(500, 700, 500, 300);
-				Log.log.info("swipe");
 				Thread.sleep(1000);
 			}
-//			if (!clickEntertainmentNews()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
-//			if (!clickThreeSixZeroNews()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
-//			if (!clickTurnturn()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
-			
-//			clickTuitui();
-//			if (!clickGoldNews()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
-//			if (!clickEighteenNews()) {
-//				return ResultDict.COMMAND_RESTART_APP;
-//			}
+			if (!clickEntertainmentNews()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			if (!clickThreeSixZeroNews()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			if (!clickTurnturn()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			clickTuitui();
+			if (!clickGoldNews()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			if (!clickEighteenNews()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
 //			if (!clickLoveNews()) {
 //				return ResultDict.COMMAND_RESTART_APP;
 //			}
@@ -380,7 +379,7 @@ public class MiZhuan {
 		try {
 
 			for (; redPackageNum < Contants.RED_PACKAGES_NUM; redPackageNum++) {
-				AdbUtils.click(650, 880);
+				AdbUtils.click(360, 510);
 				Thread.sleep(2 * 60 * 1000);
 				AdbUtils.back();
 				AdbUtils.back();
