@@ -26,7 +26,7 @@ public class MiZhuan {
 	private int DEFAULT_EXTRABONUS_TIME = 1;
 	private int INSTALL_EXPERIWNCE_TIME = 5;
 	private int DEFAULT_INSTALL_COUNT  =3;
-	private boolean isExtraBonusCompleted = false;
+	private boolean isExtraBonusCompleted = true;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = true;
 
@@ -242,26 +242,26 @@ public class MiZhuan {
 				System.out.println("swipe");
 				Thread.sleep(1000);
 			}
-			if (!clickEntertainmentNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			if (!clickThreeSixZeroNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			if (!clickTurnturn()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
+//			if (!clickEntertainmentNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
+//			if (!clickThreeSixZeroNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
+//			if (!clickTurnturn()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
 			
-			clickTuitui();
-			if (!clickGoldNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			if (!clickEighteenNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
-			if (!clickLoveNews()) {
-				return ResultDict.COMMAND_RESTART_APP;
-			}
+//			clickTuitui();
+//			if (!clickGoldNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
+//			if (!clickEighteenNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
+//			if (!clickLoveNews()) {
+//				return ResultDict.COMMAND_RESTART_APP;
+//			}
 			isLooklookCompleted = true;
 			return ResultDict.COMMAND_SUCCESS;
 		} catch (InterruptedException e) {
@@ -345,7 +345,7 @@ public class MiZhuan {
 		try {
 			Thread.sleep(10000);
 			for (; tuituiNum < Contants.TUITUI_NUM; tuituiNum++) {
-				AdbUtils.click(504,510);
+				AdbUtils.click(648,510);
 				Thread.sleep(10 * 1000);
 				AdbUtils.back();
 			}
@@ -359,7 +359,7 @@ public class MiZhuan {
 	public boolean clickTurnturn() {
 		try {
 			for (; tuituiNum < Contants.TURNTURN_NUM; tuituiNum++) {
-				AdbUtils.click(360,510);
+				AdbUtils.click(504,510);
 				Thread.sleep(10 * 1000);
 				if (!looklookManager.checkClickTurnturn()) {
 					return false;
@@ -435,7 +435,7 @@ public class MiZhuan {
 	// 18头条
 	public boolean clickEighteenNews() {
 		try {
-			AdbUtils.click(360,695);
+			AdbUtils.click(216,695);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickEighteenNews()) {
 				return false;
@@ -469,7 +469,7 @@ public class MiZhuan {
 	// 我爱头条
 	public boolean clickLoveNews() {
 		try {
-			AdbUtils.click(504,695);
+			AdbUtils.click(648,695);
 			Thread.sleep(2000);
 			if (!looklookManager.checkClickLoveNews()) {
 				return false;
