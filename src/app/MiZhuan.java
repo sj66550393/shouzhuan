@@ -185,9 +185,7 @@ public class MiZhuan {
 					if (extraBonusManager.checkFinishExtraBonus()) {
 						AdbUtils.back();
 						Thread.sleep(5000);
-						System.out.println((DateUtils.getHour() > 23));
-						System.out.println((DateUtils.getHour() == 23) && (DateUtils.getMinute() > 30));
-						if (!((DateUtils.getHour() > 23) || ((DateUtils.getHour() == 23) && (DateUtils.getMinute() > 45)))) {
+						if (!((DateUtils.getHour() > 10) || ((DateUtils.getHour() == 10) && (DateUtils.getMinute() > 30)))) {
 							Log.log.info("waiting for 10:30");
 							Thread.sleep(5 * 60 * 1000);
 							continue;
