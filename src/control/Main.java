@@ -32,6 +32,7 @@ public class Main {
 		// AdbUtils.cleanApp();
 		// MiZhuan mizhuan = new MiZhuan();
 		// mizhuan.printDoingApp();
+//		AdbUtils.isAwake();
 	}
 }
 
@@ -52,6 +53,20 @@ class Task1 extends TimerTask {
 				@Override
 				public void run() {
 					Log.log.info("restart app");
+					if (AdbUtils.isAwake().equals("false")) {
+						try {
+							AdbUtils.clickPower();
+							Thread.sleep(2000);
+							AdbUtils.swipe(300, 900, 300, 300);
+							Thread.sleep(2000);
+							AdbUtils.swipe(100, 500, 600, 500);
+							Thread.sleep(2000);
+							AdbUtils.swipe(100, 500, 600, 500);
+							Thread.sleep(2000);
+							AdbUtils.swipe(300, 900, 300, 300);
+						} catch (Exception e) {
+						}
+					}
 					restartApp();
 				}
 			});

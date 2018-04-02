@@ -41,6 +41,10 @@ public class MiZhuan {
 	}
 
 	public int start() {
+		if(DateUtils.getHour() == 1){
+			isExtraBonusCompleted = false;
+			isLooklookCompleted = false;
+		}
 		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
 			return ResultDict.COMMAND_RESTART_APP;
 		}
@@ -185,9 +189,9 @@ public class MiZhuan {
 					if (extraBonusManager.checkFinishExtraBonus()) {
 						AdbUtils.back();
 						Thread.sleep(5000);
-						if (!((DateUtils.getHour() > 10) || ((DateUtils.getHour() == 10) && (DateUtils.getMinute() > 30)))) {
+						if (!((DateUtils.getHour() > 10) || ((DateUtils.getHour() == 10) && (DateUtils.getMinute() > 32)))) {
 							Log.log.info("waiting for 10:30");
-							Thread.sleep(5 * 60 * 1000);
+							Thread.sleep(2 * 60 * 1000);
 							continue;
 						} else {
 							isExtraBonusCompleted = true;
@@ -499,7 +503,7 @@ public class MiZhuan {
 			if (!looklookManager.checkClickEntertainNews()) {
 				return false;
 			}
-			for (; entertainmentNews < Contants.ENTERTAINMENT_NEWS + 4; entertainmentNews++) {
+			for (; entertainmentNews < Contants.ENTERTAINMENT_NEWS ; entertainmentNews++) {
 				Thread.sleep(5000);
 				AdbUtils.swipe(300, 1100, 300, 500);
 				AdbUtils.click(300, 600);
@@ -597,5 +601,9 @@ public class MiZhuan {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void signIn(){
+		
 	}
 }

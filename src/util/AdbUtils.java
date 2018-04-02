@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	public static String deviceId = "CYSBBAE680109448";
+	public static String deviceId = "GEQBBAE672607770";
 	public static String storageDes = "d:/";
 	public static String storageDir = storageDes + deviceId + "/";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
@@ -14,8 +14,14 @@ public class AdbUtils {
     	String execResult = printf(adb + "dumpsys activity activities | grep mFocusedActivity");
     	String[] str = execResult.split(" ");
     	return  execResult.split(" ")[5];
-    	
     }
+    
+    public static String isAwake(){
+    	String execResult = printf(adb + "dumpsys window policy | grep mAwake");
+    	return execResult.substring(11, 16);
+    }
+    
+    
     public static void changeAdb(String str){
     	adb  = "D:\\AndroidSDK\\platform-tools\\adb.exe " + "-s " + str + " shell";
     }
@@ -149,6 +155,16 @@ public class AdbUtils {
 			e.printStackTrace();
 		}
     }
+    
+    public static void clickPower(){
+    	try {
+    		exec(adb + "input keyevent 26");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     
    
 
