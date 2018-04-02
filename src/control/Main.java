@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		Timer t = new Timer();
 		t.schedule(new Task1(), 1000);
-		// AdbUtils.ScreenCapAndCut(360,1032,330,96);
+//		 AdbUtils.ScreenCapAndCut(320,80,80,40);
 		// for(int i=0;i<5;i++){
 		// String path = CutImageUtil.cutLocalImage("d:/1.png",
 		// "d:/",34+144*i,526 , 76, 76);

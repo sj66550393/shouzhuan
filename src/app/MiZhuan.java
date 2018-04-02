@@ -6,6 +6,7 @@ import control.Main;
 import manager.ExtraBonusManager;
 import manager.InstallAppManager;
 import manager.LooklookManager;
+import manager.SigninManager;
 import util.AdbUtils;
 import util.DateUtils;
 import util.FileUtils;
@@ -29,26 +30,63 @@ public class MiZhuan {
 	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = true;
+	private boolean isSigninCompleted = false;
+	private boolean isSigninMorning = false;
+	private boolean isSigninNoon = false;
+	private boolean isSigninAfternoon =false;
+	private boolean isSigninNight = false;
 
 	ExtraBonusManager extraBonusManager;
 	LooklookManager looklookManager;
 	InstallAppManager installAppManager;
+	SigninManager signinManager;
 
 	public MiZhuan() {
 		extraBonusManager = new ExtraBonusManager();
 		looklookManager = new LooklookManager();
 		installAppManager = new InstallAppManager();
+		signinManager = new SigninManager();
 	}
 
 	public int start() {
-		if(DateUtils.getHour() == 1){
-			isExtraBonusCompleted = false;
-			isLooklookCompleted = false;
-		}
 		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
 			return ResultDict.COMMAND_RESTART_APP;
 		}
 		int result = ResultDict.COMMAND_SUCCESS;
+		if(DateUtils.getHour() == 1){
+			isExtraBonusCompleted = false;
+			isLooklookCompleted = false;
+			isSigninCompleted = false;
+			isSigninMorning = false;
+			isSigninNoon = false;
+			isSigninAfternoon = false;
+			isSigninNight = false;
+		}
+		if(!isSigninCompleted){
+			result = signIn();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
+		if((!isSigninMorning) && DateUtils.getHour() > 8 && DateUtils.getHour() < 11){
+			result  = clickSignin();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
+		if((!isSigninNoon) && DateUtils.getHour() > 11 && DateUtils.getHour() < 12){
+			result = clickSignin();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
+		if((!isSigninAfternoon) && DateUtils.getHour() > 13 && DateUtils.getHour() < 16){
+			result = clickSignin();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
+		if((!isSigninNight) && DateUtils.getHour() > 19 && DateUtils.getHour() < 23){
+			result = clickSignin();
+			if (ResultDict.COMMAND_SUCCESS != result)
+				return result;
+		}
 		if (!isExtraBonusCompleted) {
 			result = startSigninAppTask();
 			if (ResultDict.COMMAND_SUCCESS != result)
@@ -200,10 +238,6 @@ public class MiZhuan {
 					}
 					continue;
 				case ResultDict.COMMAND_RESTART_APP:
-					if(extraBonusManager.checkFinishExtraBonus()){
-						isExtraBonusCompleted = true;
-						return ResultDict.COMMAND_SUCCESS;
-					}
 					return ResultDict.COMMAND_RESTART_APP;
 				case ResultDict.COMMAND_SUCCESS:
 					break;
@@ -603,7 +637,63 @@ public class MiZhuan {
 		}
 	}
 	
-	public void signIn(){
-		
+	public int signIn() {
+		try {
+			AdbUtils.click(90, 1127);
+			Thread.sleep(1000);
+			if (!signinManager.checkClickBottomRecommand()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			AdbUtils.click(90, 224);
+			Thread.sleep(1000);
+			if (!signinManager.checkEnterSigninDetail()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			AdbUtils.click(180,1139);
+			Thread.sleep(5000);
+			AdbUtils.back();
+			Thread.sleep(1000);
+			AdbUtils.back(); 
+			isSigninCompleted = true;
+			return ResultDict.COMMAND_SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultDict.COMMAND_RESTART_APP;
+		}
+	}
+	
+	public int clickSignin(){
+		try {
+			AdbUtils.click(90, 1127);
+			Thread.sleep(1000);
+			if (!signinManager.checkClickBottomRecommand()) {
+				return ResultDict.COMMAND_RESTART_APP;
+			}
+			AdbUtils.click(90, 224);
+			Thread.sleep(5000);
+			if (!signinManager.checkEnterSigninDetail()) {
+				AdbUtils.back();
+				 if(DateUtils.getHour() > 8 && DateUtils.getHour() < 11){
+					 isSigninMorning = true;
+				 }else if( DateUtils.getHour() > 11 && DateUtils.getHour() < 12){
+					 isSigninNoon = true;
+				 }else if( DateUtils.getHour() > 13 && DateUtils.getHour() < 16){
+					 isSigninAfternoon = true;
+				 }else if(DateUtils.getHour() > 19 && DateUtils.getHour() < 23){
+					 isSigninNight = true;
+				 }
+				return ResultDict.COMMAND_SUCCESS;
+			}
+			AdbUtils.click(180,1139);
+			Thread.sleep(5000);
+			AdbUtils.back();
+			Thread.sleep(1000);
+			AdbUtils.back(); 
+			isSigninCompleted = true;
+			return ResultDict.COMMAND_SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultDict.COMMAND_RESTART_APP;
+		}
 	}
 }

@@ -77,5 +77,4 @@ public class ExtraBonusManager {
 	private boolean isHuaweiUpdateActivity(){
 		return "com.huawei.android.hwouc/.ui.activities.firmware.FirmwareNewVersionDetailsActivity".equals(AdbUtils.getTopActivity());
 	}
-
 }
