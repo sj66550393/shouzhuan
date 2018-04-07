@@ -27,4 +27,15 @@ public class SigninManager {
 		}
 	}
 	
+	public boolean checkHasSignin(){
+		String path = AdbUtils.ScreenCapAndCut(64,274,52,36);
+		float sim = PicCompareUtils.comparePicByFingerPrint("res/cun_mizhuan_signin_word_signin.png", path);
+		Log.log.info("checkHasSignin sim="+sim);
+		if (sim > 0.95) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
