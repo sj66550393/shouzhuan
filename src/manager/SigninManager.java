@@ -20,7 +20,7 @@ public class SigninManager {
 		String path = AdbUtils.ScreenCapAndCut(320,80,80,40);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/cun_mizhuan_signin_title_signin.png", path);
 		Log.log.info("checkEnterSigninDetail sim="+sim);
-		if (sim > 0.95) {
+		if (sim > 0.90) {
 			return true;
 		} else {
 			return false;

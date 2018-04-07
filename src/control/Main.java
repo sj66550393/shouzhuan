@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		Timer t = new Timer();
 		t.schedule(new Task1(), 1000);
-//		 AdbUtils.ScreenCapAndCut(320,80,80,40);
+//		 AdbUtils.ScreenCapAndCut(300,1114,120,50);
 		// for(int i=0;i<5;i++){
 		// String path = CutImageUtil.cutLocalImage("d:/1.png",
 		// "d:/",34+144*i,526 , 76, 76);
@@ -53,7 +53,7 @@ class Task1 extends TimerTask {
 				@Override
 				public void run() {
 					Log.log.info("restart app");
-					if (AdbUtils.isAwake().equals("false")) {
+					if (AdbUtils.isAwake2().equals("false")) {
 						try {
 							AdbUtils.clickPower();
 							Thread.sleep(2000);

@@ -30,11 +30,11 @@ public class MiZhuan {
 	private boolean isExtraBonusCompleted = false;
 	private boolean isLooklookCompleted = false;
 	private boolean isInstallCompleted = true;
-	private boolean isSigninCompleted = false;
-	private boolean isSigninMorning = false;
-	private boolean isSigninNoon = false;
-	private boolean isSigninAfternoon =false;
-	private boolean isSigninNight = false;
+	private boolean isSigninCompleted = true;
+	private boolean isSigninMorning = true;
+	private boolean isSigninNoon = true;
+	private boolean isSigninAfternoon =true;
+	private boolean isSigninNight = true;
 
 	ExtraBonusManager extraBonusManager;
 	LooklookManager looklookManager;
@@ -49,7 +49,7 @@ public class MiZhuan {
 	}
 
 	public int start() {
-		if (!AdbUtils.getTopActivity().equals("me.mizhuan/.TabFragmentActivity")) {
+		if (!AdbUtils.getTopActivity().contains("me.mizhuan/.TabFragmentActivity")) {
 			return ResultDict.COMMAND_RESTART_APP;
 		}
 		int result = ResultDict.COMMAND_SUCCESS;
@@ -236,6 +236,7 @@ public class MiZhuan {
 							return ResultDict.COMMAND_SUCCESS;
 						}
 					}
+					AdbUtils.back();
 					continue;
 				case ResultDict.COMMAND_RESTART_APP:
 					return ResultDict.COMMAND_RESTART_APP;
@@ -664,6 +665,7 @@ public class MiZhuan {
 	
 	public int clickSignin(){
 		try {
+			Thread.sleep(2000);
 			AdbUtils.click(90, 1127);
 			Thread.sleep(1000);
 			if (!signinManager.checkClickBottomRecommand()) {

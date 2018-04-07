@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AdbUtils {
-	public static String deviceId = "CYSBBAE680946227";
+	public static String deviceId = "GEQBBAE672607770";
 	public static String storageDes = "d:/";
 	public static String storageDir = storageDes + deviceId + "/";
 	private static String adb =  "adb -s " + deviceId	+" shell ";
@@ -19,6 +19,13 @@ public class AdbUtils {
     public static String isAwake(){
     	String execResult = printf(adb + "dumpsys window policy | grep mAwake");
     	return execResult.substring(11, 16);
+    }
+    
+    public static String isAwake2(){
+    	String execResult = printf(adb + "dumpsys window policy | grep mScreenOnFully");
+    	String[] substr = execResult.split("mScreenOnFully=");
+    	System.out.println(substr[1].substring(0, 5));
+    	return substr[1].substring(0, 5);
     }
     
     

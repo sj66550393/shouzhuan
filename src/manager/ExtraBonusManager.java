@@ -64,7 +64,7 @@ public class ExtraBonusManager {
 	}
 	
 	public boolean checkFinishExtraBonus(){
-		String path = AdbUtils.ScreenCapAndCut(0,1094, 720,90);
+		String path = AdbUtils.ScreenCapAndCut(300,1114, 120,50);
 		float sim = PicCompareUtils.comparePicByFingerPrint("res/application_detail_use_gray.png", path);
 		Log.log.info("checkFinishExtraBonus sim="+sim);
 		if (sim > 0.95) {
