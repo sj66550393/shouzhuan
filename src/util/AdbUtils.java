@@ -171,9 +171,5 @@ public class AdbUtils {
 			e.printStackTrace();
 		}
     }
-    
-    
-   
-
 }
  

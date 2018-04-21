@@ -13,6 +13,7 @@ import app.MiZhuan;
 import common.ResultDict;
 import factory.LogFactory;
 import util.AdbUtils;
+import util.ClassPathUtils;
 import util.CutImageUtil;
 import util.DateUtils;
 import util.Log;
